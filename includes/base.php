@@ -42,5 +42,26 @@ class Utils{
             return $array;
         }
     }//objectToArray
+    
+    /*
+     * Default options if not found 
+     * 
+     * @return options array
+     */
 
+    function defaultOptions(){
+        $options = array( 
+            "stc_count" => 15, 
+            "stc_min_search" => 1, 
+            "stc_min_font" => 12, 
+            "stc_max_font" => 30, 
+            "stc_color" => "#0F3754", 
+            "stc_display_count" => "n", 
+            "stc_sortby" => "term", 
+            "stc_sortby_order" => "desc" 
+        );
+        update_option( 'search_terms_settings', $options );
+        
+        return $options;
+    }//defaultOptions
 }//class

@@ -46,10 +46,14 @@ class SearchTermsWidget extends \WP_Widget {
     }//form
 
     public function widget( $args, $instance ){
+        if( ! $this->options ){
+            $this->options = Utils::defaultOptions();
+        }
+
         extract( $args );
         extract( $instance );
         extract( $this->options );
-
+        
         $stq = new SearchTermsCloudQuery();
         $terms = $stq->getTerms( $stc_count, $stc_min_search, $stc_sortby, $stc_sortby_order );//count=0 mean all
         //test for an empty terms set
@@ -79,7 +83,7 @@ class SearchTermsWidget extends \WP_Widget {
             $url = site_url() . "/?s=" . $term->term;
             //truncate the string if it's too long
             $truncate = Utils::truncate( $term->term, 15, "...");
-            $print .= "<a href='$url' title='$term->term' style='color:#$stc_color;font-size:".$font_size."px'>$truncate</a><span>(". ( ($stc_display_count == 'y')? $term->count : "") .")</span>";
+            $print .= "<a href='$url' title='$term->term' style='color:#$stc_color;font-size:".$font_size."px'>$truncate</a>". ( ($stc_display_count == 'y')? ( "<span>(". $term->count .")</span>" ) : "") ;
         }//foreach
 
         $print .= "</div>";
@@ -91,7 +95,7 @@ class SearchTermsWidget extends \WP_Widget {
     }//widget
 
     public function enqueue_files(){
-        wp_enqueue_style( 'stc-css', plugins_url()."/search_terms_cloud/css/style.css" );
+        wp_enqueue_style( 'stc-css', plugins_url( "css/style.css", __FILE__ ));
     }//enqueue_file 
 }//class
 

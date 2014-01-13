@@ -2,10 +2,13 @@
 
 namespace RY\search_terms;
 
+include_once("includes/base.php");
+
 class SearchTermsSettings{
     private $options;
     
     public function __construct(){
+        Utils::defaultOptions();
         $this->options = get_option( "search_terms_settings" );
         $this->register_settings();
         add_action( "admin_head", array( $this, "enqueue_files") );
@@ -88,9 +91,9 @@ class SearchTermsSettings{
     }//sortby_order
 
     public function enqueue_files(){
-        wp_enqueue_script( 'colorpicker-js', plugins_url()."/search_terms_cloud/js/colpick.js", array( 'jquery-core' ), '', true );
-        wp_enqueue_script( 'stc_settings', plugins_url()."/search_terms_cloud/js/settings.js", array( 'jquery-core', 'colorpicker-js' ), '', true );
-        wp_enqueue_style( 'colorpicker-css', plugins_url()."/search_terms_cloud/css/colpick.css" );
+        wp_enqueue_script( 'colorpicker-js', plugins_url( "js/colpick.js", __FILE__ ), array( 'jquery-core' ), '', true );
+        wp_enqueue_script( 'stc_settings', plugins_url( "js/settings.js", __FILE__ ), array( 'jquery-core', 'colorpicker-js' ), '', true );
+        wp_enqueue_style( 'colorpicker-css', plugins_url( "css/colpick.css", __FILE__ ) );
         
     }//enqueu_files
 }//class

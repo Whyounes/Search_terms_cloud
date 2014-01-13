@@ -120,6 +120,11 @@ add_action( "pre_get_posts" , function( $query ){
 
 //activation hook
 register_activation_hook( __FILE__ , function(){
+    $options = get_option( 'search_terms_settings' );
+    if( ! $options ){
+        $options = Utils::defaultOptions();
+    }
+
     $stc=new SearchTermsCloudQuery();
     $stc->createTable();
 });
